@@ -11,6 +11,8 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+  this.inputManager.on("settings", this.settingsModal.bind(this));
+  this.inputManager.on("closeSettings", this.closeSettingsModal.bind(this));
 
   this.setup();
 }
@@ -56,6 +58,14 @@ GameManager.prototype.restart = function () {
   document.getElementById("timer12384").innerHTML = "";
 
 };
+
+GameManager.prototype.settingsModal = function () {
+    document.getElementById("modal").style.display = "block";
+}
+
+GameManager.prototype.closeSettingsModal = function () {
+    document.getElementById("modal").style.display = "none";
+}
 
 // Keep playing after winning (allows going over 2048)
 GameManager.prototype.keepPlaying = function () {
