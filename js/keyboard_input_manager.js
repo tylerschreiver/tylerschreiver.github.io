@@ -72,6 +72,9 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".retry-button", this.restart);
   this.bindButtonPress(".restart-button", this.restart);
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
+  this.bindButtonPress(".fa-cog", this.openSettingsModal);
+  this.bindButtonPress(".fa-times", this.closeSettingsModal)
+  this.bindButtonPress(".settings-modal", this.closeSettingsModal)
 
   // Respond to swipe events
   var touchStartClientX, touchStartClientY;
@@ -130,6 +133,16 @@ KeyboardInputManager.prototype.listen = function () {
 KeyboardInputManager.prototype.restart = function (event) {
   event.preventDefault();
   this.emit("restart");
+};
+
+KeyboardInputManager.prototype.openSettingsModal = function (event) {
+    event.preventDefault();
+    this.emit("settings");
+};
+
+KeyboardInputManager.prototype.closeSettingsModal = function (event) {
+    event.preventDefault();
+    this.emit("closeSettings");
 };
 
 KeyboardInputManager.prototype.keepPlaying = function (event) {
