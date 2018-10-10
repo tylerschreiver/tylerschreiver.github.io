@@ -8,7 +8,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.startTiles     = 2;
   this.startTime      = null;
   this.timerID = null;
-
+  this.showVictory = true;
   this.relay = false;
   this.nextRelay = 8;
 
@@ -20,6 +20,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.inputManager.on("closeSettings", this.closeSettingsModal.bind(this));
   this.inputManager.on("relay", this.relayMode.bind(this));
   this.inputManager.on("three", this.chooseFunction.bind(this));
+  this.inputManager.on("victory", this.victoryScreen.bind(this));
 
 
   if (this.relay) {
@@ -76,6 +77,20 @@ GameManager.prototype.restart = function () {
         document.getElementById("winning-tile").innerHTML = "8 tile!"
     }
 };
+
+
+GameManager.prototype.victoryScreen = function () {
+    this.showVictory = !this.showVictory;
+    if (this.showVictory) {
+        document.getElementsByClassName("game-message")[0].classList.remove("none-class");
+        document.getElementsByClassName("victory-button")[0].innerHTML = "On";
+    }
+    else {
+        document.getElementsByClassName("game-message")[0].classList.add("none-class");
+        document.getElementsByClassName("victory-button")[0].innerHTML = "Off";
+    }
+    console.log("hit");
+}
 
 
 GameManager.prototype.chooseFunction = function () {
@@ -362,6 +377,7 @@ GameManager.prototype.move = function (direction) {
         this.addRandomTile();
 
         if (!this.movesAvailable()) {
+            //document.getElementsByClassName("game-message")[0].classList.remove("none-class");
             this.over = true;
             this.endTime() // Game over!
         }

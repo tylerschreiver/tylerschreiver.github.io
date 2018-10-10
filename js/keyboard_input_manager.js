@@ -75,6 +75,7 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".fa-times", this.closeSettingsModal)
   this.bindButtonPress(".relay-button", this.relayMode);
   this.bindButtonPress(".three-button", this.threeByThree);
+  this.bindButtonPress(".victory-button", this.victoryScreen);
 
     // Respond to swipe events
     var touchStartClientX, touchStartClientY;
@@ -138,6 +139,11 @@ KeyboardInputManager.prototype.restart = function (event) {
 KeyboardInputManager.prototype.threeByThree = function (event) {
     event.preventDefault();
     this.emit("three");
+};
+
+KeyboardInputManager.prototype.victoryScreen = function (event) {
+    event.preventDefault();
+    this.emit("victory");
 };
 
 KeyboardInputManager.prototype.fourByFour = function (event) {
