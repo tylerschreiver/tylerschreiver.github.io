@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>2048</title>
+    <meta charset="utf-8">
+    <title>2048</title>
 
   <link href="style/main.css" rel="stylesheet" type="text/css">
   <link rel="shortcut icon" href="favicon.ico">
@@ -13,9 +13,9 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
 </head>
 <body>
     <div class="container">
@@ -68,7 +68,6 @@
             <p class="game-intro">Join the numbers and get to the <strong id="winning-tile">2048 tile!</strong></p>
             <a class="restart-button">New Game</a>
         </div>
-
         <div class="game-container">
             <div class="game-message">
                 <p></p>
@@ -109,7 +108,6 @@
 
             </div>
         </div>
-        <p class="game-explanation"></p>
         <p class="game-explanation">
             <strong class="important">How to play:</strong><br> Use your <strong>Arrow keys, WASD keys and/or HJKL keys</strong> to move the tiles. When two tiles with the same number touch, they <strong>merge into one!</strong> Use the <strong>R key</strong> to reset.
         </p>
@@ -133,20 +131,19 @@
             <span>3x3 Mode</span>
             <button class="on-off-button three-button">Off</button>
         </div>
-
     </div>
 
-  <script src="js/bind_polyfill.js"></script>
-  <script src="js/classlist_polyfill.js"></script>
-  <script src="js/animframe_polyfill.js"></script>
-  <script src="js/keyboard_input_manager.js"></script>
-  <script src="js/html_actuator.js"></script>
-  <script src="js/grid.js"></script>
-  <script src="js/tile.js"></script>
-  <script src="js/local_storage_manager.js"></script>
-  <script src="js/game_manager.js"></script>
-  <script src="js/application.js"></script>
-  <script type="text/javascript">
+    <script src="js/bind_polyfill.js"></script>
+    <script src="js/classlist_polyfill.js"></script>
+    <script src="js/animframe_polyfill.js"></script>
+    <script src="js/keyboard_input_manager.js"></script>
+    <script src="js/html_actuator.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/tile.js"></script>
+    <script src="js/local_storage_manager.js"></script>
+    <script src="js/game_manager.js"></script>
+    <script src="js/application.js"></script>
+    <script type="text/javascript">
   function pretty(time) {
   if (time < 0) {return "DNF";}
     var bits = time % 1000;
@@ -164,6 +161,6 @@
     if (hours > 0) {s = hours + ":" + s;}
   return s;
 }
-  </script>
+    </script>
 </body>
 </html>
