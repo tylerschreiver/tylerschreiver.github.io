@@ -67,13 +67,14 @@ KeyboardInputManager.prototype.listen = function () {
             self.restart.call(self, event);
         }
     });
-
-    // Respond to button presses
-    this.bindButtonPress(".three-button", this.threeByThree)
-    this.bindButtonPress(".four-button", this.fourByFour)
-    this.bindButtonPress(".retry-button", this.restart);
-    this.bindButtonPress(".restart-button", this.restart);
-    this.bindButtonPress(".keep-playing-button", this.keepPlaying);
+  // Respond to button presses
+  this.bindButtonPress(".retry-button", this.restart);
+  this.bindButtonPress(".restart-button", this.restart);
+  this.bindButtonPress(".keep-playing-button", this.keepPlaying);
+  this.bindButtonPress(".fa-cog", this.openSettingsModal);
+  this.bindButtonPress(".fa-times", this.closeSettingsModal)
+  this.bindButtonPress(".relay-button", this.relayMode);
+  this.bindButtonPress(".three-button", this.threeByThree);
 
     // Respond to swipe events
     var touchStartClientX, touchStartClientY;
@@ -142,6 +143,21 @@ KeyboardInputManager.prototype.threeByThree = function (event) {
 KeyboardInputManager.prototype.fourByFour = function (event) {
     event.preventDefault();
     this.emit("four");
+};
+
+KeyboardInputManager.prototype.relayMode = function () {
+    event.preventDefault();
+    this.emit("relay");
+};
+
+KeyboardInputManager.prototype.openSettingsModal = function (event) {
+    event.preventDefault();
+    this.emit("settings");
+};
+
+KeyboardInputManager.prototype.closeSettingsModal = function (event) {
+    event.preventDefault();
+    this.emit("closeSettings");
 };
 
 KeyboardInputManager.prototype.keepPlaying = function (event) {

@@ -1,29 +1,33 @@
 function GameManager(size, InputManager, Actuator, StorageManager) {
-    this.size = size; // Size of the grid
-    this.inputManager = new InputManager;
-    this.storageManager = new StorageManager;
-    this.actuator = new Actuator;
-    this.timerStatus = 0; //0 = no, 1 = first move made
-    this.startTiles = 2;
-    this.startTime = null;
-    this.timerID = null;
 
-    this.inputManager.on("move", this.move.bind(this));
-    this.inputManager.on("restart", this.restart.bind(this));
-    this.inputManager.on("three", this.three.bind(this));
-    this.inputManager.on("four", this.four.bind(this));
-    this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+  this.size           = size; // Size of the grid
+  this.inputManager   = new InputManager;
+  this.storageManager = new StorageManager;
+  this.actuator       = new Actuator;
+  this.timerStatus        = 0; //0 = no, 1 = first move made
+  this.startTiles     = 2;
+  this.startTime      = null;
+  this.timerID = null;
 
-    if (this.size == 4) {
-        document.getElementsByClassName("four-button")[0].style.display = "none";
-        document.getElementsByClassName("three-button")[0].style.display = "block";
-    }
-    else {
-        document.getElementsByClassName("four-button")[0].style.display = "block";
-        document.getElementsByClassName("three-button")[0].style.display = "none";
-    }
+  this.relay = false;
+  this.nextRelay = 8;
 
-    this.setup();
+
+  this.inputManager.on("move", this.move.bind(this));
+  this.inputManager.on("restart", this.restart.bind(this));
+  this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
+  this.inputManager.on("settings", this.settingsModal.bind(this));
+  this.inputManager.on("closeSettings", this.closeSettingsModal.bind(this));
+  this.inputManager.on("relay", this.relayMode.bind(this));
+  this.inputManager.on("three", this.chooseFunction.bind(this));
+
+
+  if (this.relay) {
+      document.getElementById("winning-tile").innerHTML = "8 tile!";
+      document.getElementsByClassName("title")[0].innerHTML = "2048 Relay";
+  }
+
+  this.setup();
 }
 
 // Start the timer
@@ -54,6 +58,7 @@ GameManager.prototype.restart = function () {
     this.storageManager.clearGameState();
     this.actuator.continueGame(); // Clear the game won/lost message
     this.setup();
+    document.getElementById("timer8").innerHTML = "";
     document.getElementById("timer16").innerHTML = "";
     document.getElementById("timer32").innerHTML = "";
     document.getElementById("timer64").innerHTML = "";
@@ -66,15 +71,23 @@ GameManager.prototype.restart = function () {
     document.getElementById("timer8192").innerHTML = "";
     document.getElementById("timer16384").innerHTML = "";
 
-
+    if (this.relay) {
+        this.nextRelay = 8;
+        document.getElementById("winning-tile").innerHTML = "8 tile!"
+    }
 };
 
+
+GameManager.prototype.chooseFunction = function () {
+    if (this.size == 4) this.three();
+    else this.four()
+}
+
 GameManager.prototype.three = function () {
+    document.getElementsByClassName("three-button")[0].innerHTML = "On";
     this.storageManager.changeGameType("threeByThree");
     this.size = 3;
     var rows = document.getElementsByClassName("grid-row");
-    document.getElementsByClassName("three-button")[0].style.display = "none";
-    document.getElementsByClassName("four-button")[0].style.display = "block";
     rows[0].childNodes[3].style.display = "none";
     rows[1].childNodes[3].style.display = "none";
     rows[2].childNodes[3].style.display = "none"
@@ -86,7 +99,7 @@ GameManager.prototype.three = function () {
             timertiles[i].style.display = "none";
     }
 
-    document.getElementsByClassName("game-explanation")[0].style.marginTop = "669px";
+    document.getElementById("timer1024").style.marginBottom = "149px";
     document.getElementById("winning-tile").innerHTML = "256 Tile!";
 
     cells = document.getElementsByClassName("grid-cell");
@@ -102,11 +115,11 @@ GameManager.prototype.three = function () {
 };
 
 GameManager.prototype.four = function () {
+    document.getElementsByClassName("three-button")[0].innerHTML = "Off";
+    document.getElementById("timer1024").style.marginBottom = "0px";
     this.storageManager.changeGameType("fourByFour");
     this.size = 4;
     var rows = document.getElementsByClassName("grid-row");
-    document.getElementsByClassName("three-button")[0].style.display = "block";
-    document.getElementsByClassName("four-button")[0].style.display = "none";
     rows[0].childNodes[3].style.display = "block";
     rows[1].childNodes[3].style.display = "block";
     rows[2].childNodes[3].style.display = "block"
@@ -130,7 +143,46 @@ GameManager.prototype.four = function () {
 
 
     this.restart();
+};
 
+
+GameManager.prototype.relayMode = function () {
+    this.relay = !this.relay;
+    if (this.relay) {
+        this.nextRelay = 8;
+        this.restartRelay();
+        this.restart();
+        document.getElementsByClassName("title")[0].innerHTML = "2048 Relay";
+        document.getElementsByClassName("relay-button")[0].innerHTML = "On";
+    } else {
+        document.getElementsByClassName("title")[0].innerHTML = "2048";
+        document.getElementById("winning-tile").innerHTML = "2048 tile";
+        document.getElementsByClassName("relay-button")[0].innerHTML = "Off"
+        this.restart();
+    }
+};
+
+
+GameManager.prototype.restartRelay = function () {
+    this.storageManager.clearGameState();
+    var previousState = this.storageManager.getGameState();
+    this.grid = new Grid(this.size);
+    this.score = 0;
+    this.over = false;
+    this.won = false;
+    this.keepPlaying = false;
+    this.addStartTiles();
+    document.getElementById("winning-tile").innerHTML = this.nextRelay + " tile!";
+
+};
+
+
+GameManager.prototype.settingsModal = function () {
+    document.getElementById("modal").style.display = "block";
+};
+
+GameManager.prototype.closeSettingsModal = function () {
+    document.getElementById("modal").style.display = "none";
 };
 
 // Keep playing after winning (allows going over 2048)
@@ -242,92 +294,67 @@ GameManager.prototype.moveTile = function (tile, cell) {
 
 // Move tiles on the grid in the specified direction
 GameManager.prototype.move = function (direction) {
-    // 0: up, 1: right, 2: down, 3: left
-    var self = this;
+  // 0: up, 1: right, 2: down, 3: left
+  var self = this;
+  
+  if (this.isGameTerminated()) return; // Don't do anything if the game's over
+  
+  if (this.timerStatus == 0){
+    this.startTimer()
+  }
 
-    if (this.isGameTerminated()) return; // Don't do anything if the game's over
+  var cell, tile;
 
-    if (this.timerStatus == 0) {
-        this.startTimer()
-    }
+  var vector     = this.getVector(direction);
+  var traversals = this.buildTraversals(vector);
+  var moved      = false;
 
-    var cell, tile;
+  // Save the current tile positions and remove merger information
+  this.prepareTiles();
 
-    var vector = this.getVector(direction);
-    var traversals = this.buildTraversals(vector);
-    var moved = false;
+  // Traverse the grid in the right direction and move tiles
+  traversals.x.forEach(function (x) {
+    traversals.y.forEach(function (y) {
+      cell = { x: x, y: y };
+      tile = self.grid.cellContent(cell);
 
-    // Save the current tile positions and remove merger information
-    this.prepareTiles();
+      if (tile) {
+        var positions = self.findFarthestPosition(cell, vector);
+        var next      = self.grid.cellContent(positions.next);
 
-    // Traverse the grid in the right direction and move tiles
-    traversals.x.forEach(function (x) {
-        traversals.y.forEach(function (y) {
-            cell = { x: x, y: y };
-            tile = self.grid.cellContent(cell);
+        // Only one merger per row traversal?
+        if (next && next.value === tile.value && !next.mergedFrom) {
+          var merged = new Tile(positions.next, tile.value * 2);
+          merged.mergedFrom = [tile, next];
 
-            if (tile) {
-                var positions = self.findFarthestPosition(cell, vector);
-                var next = self.grid.cellContent(positions.next);
+          self.grid.insertTile(merged);
+          self.grid.removeTile(tile);
 
-                // Only one merger per row traversal?
-                if (next && next.value === tile.value && !next.mergedFrom) {
-                    var merged = new Tile(positions.next, tile.value * 2);
-                    merged.mergedFrom = [tile, next];
+          // Converge the two tiles' positions
+          tile.updatePosition(positions.next);
 
-                    self.grid.insertTile(merged);
-                    self.grid.removeTile(tile);
+          // Update the score
+          self.score += merged.value;
+            //tile is made
+          var id = "timer" + merged.value;
+          if (!self.relay) {
+              if (document.getElementById(id) && document.getElementById(id).innerHTML === "") document.getElementById(id).innerHTML = pretty(time);
+          }
+          else {
+              if (merged.value == self.nextRelay) {
+                  document.getElementById(id).innerHTML = pretty(time);
+                  self.nextRelay = self.nextRelay * 2;
+                  self.restartRelay();
+              }
+          }
 
-                    // Converge the two tiles' positions
-                    tile.updatePosition(positions.next);
-
-                    // Update the score
-                    self.score += merged.value;
-
-                    //Tile is made
-                    if (merged.value === 16 && document.getElementById("timer16").innerHTML === "") {
-                        document.getElementById("timer16").innerHTML = pretty(time);
-                    }
-                    if (merged.value === 32 && document.getElementById("timer32").innerHTML === "") {
-                        document.getElementById("timer32").innerHTML = pretty(time);
-                    }
-                    if (merged.value === 64 && document.getElementById("timer64").innerHTML === "") {
-                        document.getElementById("timer64").innerHTML = pretty(time);
-                    }
-                    if (merged.value === 128 && document.getElementById("timer128").innerHTML === "") {
-                        document.getElementById("timer128").innerHTML = pretty(time);
-                    }
-                    if (merged.value === 256 && document.getElementById("timer256").innerHTML === "") {
-                        document.getElementById("timer256").innerHTML = pretty(time);
-                    }
-                    if (merged.value === 512 && document.getElementById("timer512").innerHTML === "") {
-                        document.getElementById("timer512").innerHTML = pretty(time);
-                    }
-                    if (merged.value === 1024 && document.getElementById("timer1024").innerHTML === "") {
-                        document.getElementById("timer1024").innerHTML = pretty(time);
-                    }
-                    if (merged.value === 2048 && document.getElementById("timer2048").innerHTML === "") {
-                        self.won = true;
-                        document.getElementById("timer2048").innerHTML = pretty(time);
-                    }
-                    if (merged.value === 4096 && document.getElementById("timer4096").innerHTML === "") {
-                        document.getElementById("timer4096").innerHTML = pretty(time);
-                    }
-                    if (merged.value === 8192 && document.getElementById("timer8192").innerHTML === "") {
-                        document.getElementById("timer8192").innerHTML = pretty(time);
-                    }
-                    if (merged.value === 16384 && document.getElementById("timer16384").innerHTML === "") {
-                        document.getElementById("timer16384").innerHTML = pretty(time);
-                    }
-
-                } else {
-                    self.moveTile(tile, positions.farthest);
-                }
-
-                if (!self.positionsEqual(cell, tile)) {
-                    moved = true; // The tile moved from its original cell!
-                }
-            }
+        } else {
+          self.moveTile(tile, positions.farthest);
+        }
+        if (!self.positionsEqual(cell, tile)) {
+            moved = true; // The tile moved from its original cell!
+        }
+        }
         });
     });
 

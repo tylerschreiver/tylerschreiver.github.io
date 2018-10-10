@@ -13,17 +13,17 @@ body {
     margin: 80px 0;
 }
 
-.heading {
-    width: 500px;
-    float: left;
-    margin-bottom: 15px;
+.heading{
+  width:500px;
+  float:left;
+  margin-bottom: 15px;
 }
 
-    .heading:after {
-        content: "";
-        display: block;
-        clear: both;
-    }
+
+.heading:after {
+  content: "";
+  display: block;
+  clear: both; }
 
 h1.title {
     font-size: 45px;
@@ -193,8 +193,43 @@ hr {
 }
 
 .container {
-    width: 750px;
-    margin: 0 auto;
+  margin-top: 80px !important;
+  width: 750px;
+  margin: 0 auto; }
+
+.fa-cog {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 40px !important;
+    cursor:pointer;
+}
+
+.settings-modal {
+    display: none;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 100px;
+    position: fixed;
+    top: 0;
+}
+
+.settings-modal-content {
+    background-color: #faf8ef;
+    border-radius: 3px;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 400px;
+}
+
+.fa-times {
+    float: right;
+    margin-top: -15px;
+    margin-right: -10px;
+    cursor: pointer;
 }
 
 @-webkit-keyframes fade-in {
@@ -823,6 +858,21 @@ hr {
     float: right;
 }
 
+
+.on-off-button {
+    display: inline-block;
+    background: #8f7a66;
+    border-radius: 3px;
+    padding: 0 20px;
+    text-decoration: none;
+    color: #f9f6f2;
+    height: 25px;
+    line-height: 26px;
+    display: block;
+    cursor: pointer;
+    text-align: center;
+    float: right;
+}
 
 .game-explanation {
 }
