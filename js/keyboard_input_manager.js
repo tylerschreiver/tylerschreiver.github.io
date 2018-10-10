@@ -74,7 +74,8 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
   this.bindButtonPress(".fa-cog", this.openSettingsModal);
   this.bindButtonPress(".fa-times", this.closeSettingsModal)
-  this.bindButtonPress(".settings-modal", this.closeSettingsModal)
+  this.bindButtonPress(".relay-button", this.relayMode)
+  //this.bindButtonPress(".settings-modal", this.closeSettingsModal)
 
   // Respond to swipe events
   var touchStartClientX, touchStartClientY;
@@ -133,6 +134,11 @@ KeyboardInputManager.prototype.listen = function () {
 KeyboardInputManager.prototype.restart = function (event) {
   event.preventDefault();
   this.emit("restart");
+};
+
+KeyboardInputManager.prototype.relayMode = function () {
+    event.preventDefault();
+    this.emit("relay");
 };
 
 KeyboardInputManager.prototype.openSettingsModal = function (event) {
