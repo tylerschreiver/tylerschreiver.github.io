@@ -6,13 +6,24 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.timerStatus        = 0; //0 = no, 1 = first move made
   this.startTiles     = 2;
   this.startTime      = null;
-  this.timerID        = null;
+  this.timerID = null;
+
+  this.relay = false;
+  this.nextRelay = 8;
+
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
   this.inputManager.on("settings", this.settingsModal.bind(this));
   this.inputManager.on("closeSettings", this.closeSettingsModal.bind(this));
+  this.inputManager.on("relay", this.relayMode.bind(this));
+
+
+  if (this.relay) {
+      document.getElementById("winning-tile").innerHTML = "8 tile!";
+      document.getElementsByClassName("title")[0].innerHTML = "2048 Relay";
+  }
 
   this.setup();
 }
@@ -55,17 +66,53 @@ GameManager.prototype.restart = function () {
   document.getElementById("timer2048").innerHTML = "";
   document.getElementById("timer4096").innerHTML = "";
   document.getElementById("timer8192").innerHTML = "";
-  document.getElementById("timer12384").innerHTML = "";
+  document.getElementById("timer16384").innerHTML = "";
+
+  if (this.relay) {
+      this.nextRelay = 8;
+      document.getElementById("winning-tile").innerHTML = "8 tile!"
+  }
 
 };
 
+
+GameManager.prototype.relayMode = function () {
+    this.relay = !this.relay;
+    if (this.relay) {
+        this.nextRelay = 8;
+        this.restartRelay();
+        document.getElementsByClassName("title")[0].innerHTML = "2048 Relay";
+        document.getElementsByClassName("relay-button")[0].innerHTML = "On";
+    } else {
+        document.getElementsByClassName("title")[0].innerHTML = "2048";
+        document.getElementById("winning-tile").innerHTML = "2048 tile";
+        document.getElementsByClassName("relay-button")[0].innerHTML = "Off"
+        this.restart();
+    }
+};
+
+
+GameManager.prototype.restartRelay = function () {
+    this.storageManager.clearGameState();
+    var previousState = this.storageManager.getGameState();
+    this.grid = new Grid(this.size);
+    this.score = 0;
+    this.over = false;
+    this.won = false;
+    this.keepPlaying = false;
+    this.addStartTiles();
+    document.getElementById("winning-tile").innerHTML = this.nextRelay + " tile!";
+
+};
+
+
 GameManager.prototype.settingsModal = function () {
     document.getElementById("modal").style.display = "block";
-}
+};
 
 GameManager.prototype.closeSettingsModal = function () {
     document.getElementById("modal").style.display = "none";
-}
+};
 
 // Keep playing after winning (allows going over 2048)
 GameManager.prototype.keepPlaying = function () {
@@ -217,41 +264,17 @@ GameManager.prototype.move = function (direction) {
 
           // Update the score
           self.score += merged.value;
-
-          //Tile is made
-          if (merged.value === 16  &&  document.getElementById("timer16").innerHTML === ""){
-            document.getElementById("timer16").innerHTML = pretty(time);
+            //tile is made
+          var id = "timer" + merged.value;
+          if (!self.relay) {
+              if (document.getElementById(id) && document.getElementById(id).innerHTML === "") document.getElementById(id).innerHTML = pretty(time);
           }
-          if (merged.value === 32  &&  document.getElementById("timer32").innerHTML === ""){
-            document.getElementById("timer32").innerHTML = pretty(time);
-          }
-          if (merged.value === 64  &&  document.getElementById("timer64").innerHTML === ""){
-            document.getElementById("timer64").innerHTML = pretty(time);
-          }
-          if (merged.value === 128  &&  document.getElementById("timer128").innerHTML === ""){
-            document.getElementById("timer128").innerHTML = pretty(time);
-          }
-          if (merged.value === 256  &&  document.getElementById("timer256").innerHTML === ""){
-            document.getElementById("timer256").innerHTML = pretty(time);
-          }
-          if (merged.value === 512  &&  document.getElementById("timer512").innerHTML === ""){
-            document.getElementById("timer512").innerHTML = pretty(time);
-          }
-          if (merged.value === 1024  &&  document.getElementById("timer1024").innerHTML === ""){
-            document.getElementById("timer1024").innerHTML = pretty(time);
-          }
-          if (merged.value === 2048  &&  document.getElementById("timer2048").innerHTML === ""){
-            self.won = true;
-            document.getElementById("timer2048").innerHTML = pretty(time);
-          }
-          if (merged.value === 4096  &&  document.getElementById("timer4096").innerHTML === ""){
-            document.getElementById("timer4096").innerHTML = pretty(time);
-          }
-          if (merged.value === 8192  &&  document.getElementById("timer8192").innerHTML === ""){
-            document.getElementById("timer8192").innerHTML = pretty(time);
-          }
-          if (merged.value === 16384  &&  document.getElementById("timer16384").innerHTML === ""){
-            document.getElementById("timer16384").innerHTML = pretty(time);
+          else {
+              if (merged.value == self.nextRelay) {
+                  document.getElementById(id).innerHTML = pretty(time);
+                  self.nextRelay = self.nextRelay * 2;
+                  self.restartRelay();
+              }
           }
 
         } else {
