@@ -10,7 +10,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.timerID = null;
   this.showVictory = true;
   this.relay = false;
-  this.nextRelay = 8;
+  this.nextRelay = 16;
 
 
   this.inputManager.on("move", this.move.bind(this));
@@ -24,7 +24,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
 
 
   if (this.relay) {
-      document.getElementById("winning-tile").innerHTML = "8 tile!";
+      document.getElementById("winning-tile").innerHTML = "16 tile!";
       document.getElementsByClassName("title")[0].innerHTML = "2048 Relay";
   }
 
@@ -59,7 +59,6 @@ GameManager.prototype.restart = function () {
     this.storageManager.clearGameState();
     this.actuator.continueGame(); // Clear the game won/lost message
     this.setup();
-    document.getElementById("timer8").innerHTML = "";
     document.getElementById("timer16").innerHTML = "";
     document.getElementById("timer32").innerHTML = "";
     document.getElementById("timer64").innerHTML = "";
@@ -73,8 +72,8 @@ GameManager.prototype.restart = function () {
     document.getElementById("timer16384").innerHTML = "";
 
     if (this.relay) {
-        this.nextRelay = 8;
-        document.getElementById("winning-tile").innerHTML = "8 tile!"
+        this.nextRelay = 16;
+        document.getElementById("winning-tile").innerHTML = "16 tile!"
     }
 };
 
