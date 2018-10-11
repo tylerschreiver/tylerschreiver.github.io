@@ -376,9 +376,13 @@ GameManager.prototype.move = function (direction) {
         this.addRandomTile();
 
         if (!this.movesAvailable()) {
-            //document.getElementsByClassName("game-message")[0].classList.remove("none-class");
-            this.over = true;
-            this.endTime() // Game over!
+            if (!this.relay) {
+                this.over = true;
+                this.endTime() // Game over!
+            }
+            else {
+                this.restartRelay();
+            }
         }
 
         this.actuate();
