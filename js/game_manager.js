@@ -113,7 +113,7 @@ GameManager.prototype.three = function () {
             timertiles[i].style.display = "none";
     }
 
-    document.getElementById("timer1024").style.marginBottom = "149px";
+    document.getElementById("timer1024").style.marginBottom = "200px";
     document.getElementById("winning-tile").innerHTML = "256 Tile!";
 
     cells = document.getElementsByClassName("grid-cell");
