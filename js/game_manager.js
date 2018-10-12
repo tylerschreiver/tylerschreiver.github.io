@@ -113,7 +113,7 @@ GameManager.prototype.three = function () {
             timertiles[i].style.display = "none";
     }
 
-    document.getElementById("timer1024").style.marginBottom = "149px";
+    document.getElementById("timer1024").style.marginBottom = "200px";
     document.getElementById("winning-tile").innerHTML = "256 Tile!";
 
     cells = document.getElementsByClassName("grid-cell");
@@ -340,6 +340,7 @@ GameManager.prototype.move = function (direction) {
         if (next && next.value === tile.value && !next.mergedFrom) {
           var merged = new Tile(positions.next, tile.value * 2);
           merged.mergedFrom = [tile, next];
+          if (merged.value == 2048 && !self.won && self.showVictory) self.won = true;
 
           self.grid.insertTile(merged);
           self.grid.removeTile(tile);
