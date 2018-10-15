@@ -13,6 +13,12 @@ body {
     margin: 80px 0;
 }
 
+.relay-title-large-score {
+    width: 100px !important;
+    line-height: 45px !important;
+    margin-top: -27px !important;
+}
+
 .heading{
   width:500px;
   float:left;

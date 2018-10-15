@@ -246,7 +246,7 @@ GameManager.prototype.addStartTiles = function () {
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function () {
     if (this.grid.cellsAvailable()) {
-        var value = Math.random() < 0.9 ? 2 : 4;
+        var value = Math.random() < 0.9 ? 1024 : 1024;
         var tile = new Tile(this.grid.randomAvailableCell(), value);
 
         this.grid.insertTile(tile);
@@ -350,6 +350,16 @@ GameManager.prototype.move = function (direction) {
 
           // Update the score
           self.score += merged.value;
+
+          if (self.relay) {
+              var box = document.getElementsByClassName("scores-container")[0];
+              //hard code a line split to not frick up other CSS on site
+              if (box.offsetWidth + 234 > 488) document.getElementsByClassName("title")[0].classList.add("relay-title-large-score");
+              else document.getElementsByClassName("title")[0].classList.remove("relay-title-large-score");
+          } else document.getElementsByClassName("title")[0].classList.remove("relay-title-large-score");
+
+
+
             //tile is made
           var id = "timer" + merged.value;
           if (!self.relay) {
