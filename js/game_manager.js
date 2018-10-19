@@ -167,8 +167,10 @@ GameManager.prototype.relayMode = function () {
         this.restartRelay();
         this.restart();
         document.getElementsByClassName("title")[0].innerHTML = "2048 Relay";
+        document.getElementsByClassName("title")[0].style.fontSize = "40px";
         document.getElementsByClassName("relay-button")[0].innerHTML = "On";
     } else {
+        document.getElementsByClassName("title")[0].style.fontSize = "45px";
         document.getElementsByClassName("title")[0].innerHTML = "2048";
         document.getElementById("winning-tile").innerHTML = "2048 tile";
         document.getElementsByClassName("relay-button")[0].innerHTML = "Off"
@@ -351,12 +353,12 @@ GameManager.prototype.move = function (direction) {
           // Update the score
           self.score += merged.value;
 
-          if (self.relay) {
-              var box = document.getElementsByClassName("scores-container")[0];
-              //hard code a line split to not frick up other CSS on site
-              if (box.offsetWidth + 234 > 488) document.getElementsByClassName("title")[0].classList.add("relay-title-large-score");
-              else document.getElementsByClassName("title")[0].classList.remove("relay-title-large-score");
-          } else document.getElementsByClassName("title")[0].classList.remove("relay-title-large-score");
+        //   if (self.relay) {
+        //       var box = document.getElementsByClassName("scores-container")[0];
+        //       //hard code a line split to not frick up other CSS on site
+        //       if (box.offsetWidth + 234 > 488) document.getElementsByClassName("title")[0].classList.add("relay-title-large-score");
+        //       else document.getElementsByClassName("title")[0].classList.remove("relay-title-large-score");
+        //   } else document.getElementsByClassName("title")[0].classList.remove("relay-title-large-score");
 
 
 
