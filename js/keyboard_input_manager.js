@@ -54,6 +54,9 @@ KeyboardInputManager.prototype.listen = function () {
         var modifiers = event.altKey || event.ctrlKey || event.metaKey ||
                         event.shiftKey;
         var mapped = map[event.which];
+        if (event.keyCode == 32) {
+            event.preventDefault();
+        }
 
         if (!modifiers) {
             if (mapped !== undefined) {
@@ -76,6 +79,7 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".relay-button", this.relayMode);
   this.bindButtonPress(".three-button", this.threeByThree);
   this.bindButtonPress(".victory-button", this.victoryScreen);
+  this.bindButtonPress(".dark-button", this.darkMode);
 
     // Respond to swipe events
     var touchStartClientX, touchStartClientY;
@@ -144,6 +148,11 @@ KeyboardInputManager.prototype.threeByThree = function (event) {
 KeyboardInputManager.prototype.victoryScreen = function (event) {
     event.preventDefault();
     this.emit("victory");
+};
+
+KeyboardInputManager.prototype.darkMode= function (event) {
+    event.preventDefault();
+    this.emit("dark");
 };
 
 KeyboardInputManager.prototype.fourByFour = function (event) {

@@ -8,6 +8,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.startTiles     = 2;
   this.startTime      = null;
   this.timerID = null;
+  this.isDarkMode = false;
   this.showVictory = true;
   this.relay = false;
   this.nextRelay = 16;
@@ -21,7 +22,30 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.inputManager.on("relay", this.relayMode.bind(this));
   this.inputManager.on("three", this.chooseFunction.bind(this));
   this.inputManager.on("victory", this.victoryScreen.bind(this));
-
+  this.inputManager.on("dark", this.darkMode.bind(this));
+    
+  if (!localStorage.getItem("size")) {
+      localStorage.setItem("size", this.size);
+      localStorage.setItem("showVictory", this.showVictory);
+      localStorage.setItem("darkMode", this.isDarkMode);
+      localStorage.setItem("relay", this.relay);
+  }
+  else {
+      if (localStorage.getItem("size") == 3) this.three();
+      if (localStorage.getItem("darkMode") == "true") this.darkMode();
+      else {
+          this.isDarkMode = true;
+          this.darkMode();
+      }
+      if (localStorage.getItem("relay") == "true") this.relayMode();
+      else {
+          this.relay = true;
+          this.relayMode();
+      }
+      if (localStorage.getItem("showVictory") == "false") this.victoryScreen();
+  }
+    
+  
 
   if (this.relay) {
       document.getElementById("winning-tile").innerHTML = "16 tile!";
@@ -80,6 +104,7 @@ GameManager.prototype.restart = function () {
 
 GameManager.prototype.victoryScreen = function () {
     this.showVictory = !this.showVictory;
+    localStorage.setItem("showVictory", this.showVictory);
     if (this.showVictory) {
         document.getElementsByClassName("game-message")[0].classList.remove("none-class");
         document.getElementsByClassName("victory-button")[0].innerHTML = "On";
@@ -88,7 +113,21 @@ GameManager.prototype.victoryScreen = function () {
         document.getElementsByClassName("game-message")[0].classList.add("none-class");
         document.getElementsByClassName("victory-button")[0].innerHTML = "Off";
     }
-    console.log("hit");
+}
+
+GameManager.prototype.darkMode = function () {
+    this.isDarkMode = !this.isDarkMode;
+    localStorage.setItem("darkMode", this.isDarkMode);
+    var style = document.getElementById("dark-style");
+    var button = document.getElementsByClassName("dark-button")[0];
+    if (!this.isDarkMode) {
+        style.disabled = "disabled";
+        button.innerText = "Off"
+    }
+    else {
+        style.disabled = undefined;
+        button.innerText = "On"
+    }
 }
 
 
@@ -101,6 +140,7 @@ GameManager.prototype.three = function () {
     document.getElementsByClassName("three-button")[0].innerHTML = "On";
     this.storageManager.changeGameType("threeByThree");
     this.size = 3;
+    localStorage.setItem("size", this.size);
     var rows = document.getElementsByClassName("grid-row");
     rows[0].childNodes[3].style.display = "none";
     rows[1].childNodes[3].style.display = "none";
@@ -133,6 +173,7 @@ GameManager.prototype.four = function () {
     document.getElementById("timer1024").style.marginBottom = "0px";
     this.storageManager.changeGameType("fourByFour");
     this.size = 4;
+    localStorage.setItem("size", this.size);
     var rows = document.getElementsByClassName("grid-row");
     rows[0].childNodes[3].style.display = "block";
     rows[1].childNodes[3].style.display = "block";
@@ -162,6 +203,7 @@ GameManager.prototype.four = function () {
 
 GameManager.prototype.relayMode = function () {
     this.relay = !this.relay;
+    localStorage.setItem("relay", this.relay);
     if (this.relay) {
         this.nextRelay = 8;
         this.restartRelay();

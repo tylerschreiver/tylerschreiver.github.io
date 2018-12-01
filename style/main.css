@@ -9,9 +9,6 @@ html, body {
     font-size: 18px;
 }
 
-body {
-    margin: 80px 0;
-}
 
 .relay-title-large-score {
     width: 100px !important;
@@ -164,7 +161,24 @@ h1.title {
     width: 42px;
     height: 42px;
     line-height: 42px;
-    color: #776e65;
+    color: #f9f6f2 !important;
+    background: #eee4da;
+    font-family: 'Clear Sans';
+    float: left;
+    margin-left: 15px;
+    margin-top: 9px;
+}
+
+.timertileNumber {
+    box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0), inset 0 0 0 1px rgba(255, 255, 255, 0);
+    border-radius: 3px;
+    text-align: center;
+    font-weight: bold;
+    z-index: 10;
+    width: 42px;
+    height: 42px;
+    line-height: 42px;
+    color: #f9f6f2 !important;
     background: #eee4da;
     font-family: 'Clear Sans';
     float: left;
@@ -459,6 +473,7 @@ hr {
     width: 107px;
     height: 107px;
     line-height: 116.25px;
+    color: #776e65;
 }
 
     .tile.tile-position-1-1 {

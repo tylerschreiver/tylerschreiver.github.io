@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <title>2048</title>
 
-  <link href="style/main.css" rel="stylesheet" type="text/css">
-  <link rel="shortcut icon" href="favicon.ico">
-  <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
-  <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone 5+ -->
-  <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x920.png"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone, retina -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link id="dark-style" href="style/dark-mode.css" rel="stylesheet" type="text/css">
+    <link id="main-style" href="style/main.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
+    <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x1096.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone 5+ -->
+    <link rel="apple-touch-startup-image" href="meta/apple-touch-startup-image-640x920.png" media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone, retina -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -29,37 +30,37 @@
         </div>
         <div id="timerbox">
             <div id="timer"> </div>
-            <div class="timertile" style="color: #f9f6f2; font-size: 22px; background: #f59563">16</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 22px; background: #f59563">16</div>
             <div class="timertile" id="timer16" style="margin-left:6px; width:159px"></div>
             <br><br>
-            <div class="timertile" style="color: #f9f6f2; font-size: 22px; background: #f67c5f">32</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 22px; background: #f67c5f">32</div>
             <div class="timertile" id="timer32" style="margin-left:6px; width:159px"></div>
             <br><br>
-            <div class="timertile" style="color: #f9f6f2; font-size: 22px; background: #f65e3b">64</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 22px; background: #f65e3b">64</div>
             <div class="timertile" id="timer64" style="margin-left:6px; width:159px"></div>
             <br><br>
-            <div class="timertile" style="color: #f9f6f2; font-size: 18px; background: #edcf72">128</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 18px; background: #edcf72">128</div>
             <div class="timertile" id="timer128" style="margin-left:6px; width:159px"></div>
             <br><br>
-            <div class="timertile" style="color: #f9f6f2; font-size: 18px; background: #edcc61">256</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 18px; background: #edcc61">256</div>
             <div class="timertile" id="timer256" style="margin-left:6px; width:159px"></div>
             <br><br>
-            <div class="timertile" style="color: #f9f6f2; font-size: 18px; background: #edc850">512</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 18px; background: #edc850">512</div>
             <div class="timertile" id="timer512" style="margin-left:6px; width:159px"></div>
             <br><br>
-            <div class="timertile" style="color: #f9f6f2; font-size: 14px; background: #edc53f">1024</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 14px; background: #edc53f">1024</div>
             <div class="timertile" id="timer1024" style="margin-left:6px; width:159px"></div>
             <br><br>
-            <div class="timertile" style="color: #f9f6f2; font-size: 14px; background: #edc22e">2048</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 14px; background: #edc22e">2048</div>
             <div class="timertile" id="timer2048" style="margin-left:6px; width:159px"></div>
             <br><br>
-            <div class="timertile" style="color: #f9f6f2; font-size: 14px; background: #3c3a32">4096</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 14px; background: #3c3a32">4096</div>
             <div class="timertile" id="timer4096" style="margin-left:6px; width:159px"></div>
             <br><br>
-            <div class="timertile" style="color: #f9f6f2; font-size: 14px; background: #3c3a32">8192</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 14px; background: #3c3a32">8192</div>
             <div class="timertile" id="timer8192" style="margin-left:6px; width:159px"></div>
             <br><br>
-            <div class="timertile" style="color: #f9f6f2; font-size: 14px; background: #3c3a32">16384</div>
+            <div class="timertileNumber" style="color: #f9f6f2; font-size: 14px; background: #3c3a32">16384</div>
             <div class="timertile" id="timer16384" style="margin-left:6px; width:159px"></div>
         </div>
         <div class="above-game">
@@ -136,6 +137,11 @@
 
             <span>Victory Screen</span>
             <button class="on-off-button victory-button">On</button>
+
+            <div style="height:10px;"></div>
+
+            <span>Dark Mode</span>
+            <button class="on-off-button dark-button">On</button>
         </div>
     </div>
 
