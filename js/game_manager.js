@@ -1,8 +1,8 @@
 function GameManager(size, InputManager, Actuator, StorageManager) {
   this.size           = size; // Size of the grid
-  this.inputManager   = new InputManager;
   this.storageManager = new StorageManager;
   this.leaderboard = new Leaderboard;
+  this.inputManager = new InputManager(this.leaderboard);
   this.actuator       = new Actuator;
   this.timerStatus        = 0; //0 = no, 1 = first move made
   this.startTiles     = 2;
@@ -25,6 +25,7 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.inputManager.on("victory", this.victoryScreen.bind(this));
   this.inputManager.on("dark", this.darkMode.bind(this));
   this.inputManager.on("leaderboard", this.leaderboardMenu.bind(this));
+  this.inputManager.on("addToLeaderboard", this.addToLeaderboard.bind(this));
     
   if (!localStorage.getItem("size")) {
       localStorage.setItem("size", this.size);
@@ -246,12 +247,21 @@ GameManager.prototype.closeSettingsModal = function () {
 };
 
 GameManager.prototype.closeLeaderboardModal = function () {
-    document.getElementById("leaderboard-modal").style.display = "none";
+    this.leaderboard.closeLeaderboardModal();
+
 };
 
 GameManager.prototype.leaderboardMenu = function () {
-    this.leaderboard.createLeaderboard();
+    //this.leaderboard.openAddToLeaderboardModal();
+    this.leaderboard.openLeaderboardModal();
 };
+
+GameManager.prototype.addToLeaderboard = function () {
+    var name = document.getElementById("add-name-input").value;
+    var score = this.score;
+    this.leaderboard.addScoreToLeaderboard(name, score);
+
+}
 
 // Keep playing after winning (allows going over 2048)
 GameManager.prototype.keepPlaying = function () {
@@ -395,7 +405,7 @@ GameManager.prototype.move = function (direction) {
           var merged = new Tile(positions.next, tile.value * 2);
           merged.mergedFrom = [tile, next];
           if (merged.value == 2048 && !self.won && self.showVictory) self.won = true;
-
+          document.getElementById("launch").style.display = self.won ? "none" : "inline-block";
           self.grid.insertTile(merged);
           self.grid.removeTile(tile);
 

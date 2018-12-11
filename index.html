@@ -73,6 +73,7 @@
                 <p></p>
                 <div class="lower">
                     <a class="keep-playing-button">Keep going</a>
+                    <a id="launch" class="launch-add-to-leaderboard">Add To Leaderboard</a>
                     <a class="retry-button">Try again</a>
                 </div>
             </div>
@@ -150,6 +151,17 @@
         <div id="leaderboard-modal-content" class="settings-modal-content">
             <i class="fa fa-times close-leaderboard"></i>
             <h2 style="margin:0 0 10px 0px">High Score Leaderboard</h2>
+            <div id="holder"></div>
+        </div>
+    </div>
+
+    <div id="add-to-leaderboard" class="settings-modal">
+        <div id="add-to-leaderboard-content" class="settings-modal-content">
+            <i class="fa fa-times close-add-to-leaderboard"></i>
+            <h2 style="margin:0 0 10px 0px">Add To Leaderboard</h2>
+            <span>Name: </span>
+            <input id="add-name-input" class="add-name-input"/>
+            <button id="add-to-leaderboard-button" class="add-to-leaderboard-button on-off-button">Add</button>
         </div>
     </div>
 
