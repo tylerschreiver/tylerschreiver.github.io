@@ -1,8 +1,8 @@
 function GameManager(size, InputManager, Actuator, StorageManager) {
-
   this.size           = size; // Size of the grid
-  this.inputManager   = new InputManager;
   this.storageManager = new StorageManager;
+  this.leaderboard = new Leaderboard;
+  this.inputManager = new InputManager(this.leaderboard);
   this.actuator       = new Actuator;
   this.timerStatus        = 0; //0 = no, 1 = first move made
   this.startTiles     = 2;
@@ -12,17 +12,20 @@ function GameManager(size, InputManager, Actuator, StorageManager) {
   this.showVictory = true;
   this.relay = false;
   this.nextRelay = 16;
-
+    
 
   this.inputManager.on("move", this.move.bind(this));
   this.inputManager.on("restart", this.restart.bind(this));
   this.inputManager.on("keepPlaying", this.keepPlaying.bind(this));
   this.inputManager.on("settings", this.settingsModal.bind(this));
   this.inputManager.on("closeSettings", this.closeSettingsModal.bind(this));
+  this.inputManager.on("closeLeaderboard", this.closeLeaderboardModal.bind(this));
   this.inputManager.on("relay", this.relayMode.bind(this));
   this.inputManager.on("three", this.chooseFunction.bind(this));
   this.inputManager.on("victory", this.victoryScreen.bind(this));
   this.inputManager.on("dark", this.darkMode.bind(this));
+  this.inputManager.on("leaderboard", this.leaderboardMenu.bind(this));
+  this.inputManager.on("addToLeaderboard", this.addToLeaderboard.bind(this));
     
   if (!localStorage.getItem("size")) {
       localStorage.setItem("size", this.size);
@@ -243,6 +246,23 @@ GameManager.prototype.closeSettingsModal = function () {
     document.getElementById("modal").style.display = "none";
 };
 
+GameManager.prototype.closeLeaderboardModal = function () {
+    this.leaderboard.closeLeaderboardModal();
+
+};
+
+GameManager.prototype.leaderboardMenu = function () {
+    //this.leaderboard.openAddToLeaderboardModal();
+    this.leaderboard.openLeaderboardModal();
+};
+
+GameManager.prototype.addToLeaderboard = function () {
+    var name = document.getElementById("add-name-input").value;
+    var score = this.score;
+    this.leaderboard.addScoreToLeaderboard(name, score);
+
+}
+
 // Keep playing after winning (allows going over 2048)
 GameManager.prototype.keepPlaying = function () {
     this.keepPlaying = true;
@@ -385,7 +405,7 @@ GameManager.prototype.move = function (direction) {
           var merged = new Tile(positions.next, tile.value * 2);
           merged.mergedFrom = [tile, next];
           if (merged.value == 2048 && !self.won && self.showVictory) self.won = true;
-
+          document.getElementById("launch").style.display = self.won ? "none" : "inline-block";
           self.grid.insertTile(merged);
           self.grid.removeTile(tile);
 

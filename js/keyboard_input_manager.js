@@ -1,6 +1,6 @@
-function KeyboardInputManager() {
+function KeyboardInputManager(Leaderboard) {
     this.events = {};
-
+    this.leaderboard = Leaderboard;
     if (window.navigator.msPointerEnabled) {
         //Internet Explorer 10 style
         this.eventTouchstart = "MSPointerDown";
@@ -59,7 +59,7 @@ KeyboardInputManager.prototype.listen = function () {
         }
 
         if (!modifiers) {
-            if (mapped !== undefined) {
+            if (mapped !== undefined && !self.leaderboard.isAddOpen) {
                 event.preventDefault();
                 self.emit("move", mapped);
             }
@@ -76,10 +76,16 @@ KeyboardInputManager.prototype.listen = function () {
   this.bindButtonPress(".keep-playing-button", this.keepPlaying);
   this.bindButtonPress(".fa-cog", this.openSettingsModal);
   this.bindButtonPress(".fa-times", this.closeSettingsModal)
+  this.bindButtonPress(".close-leaderboard", this.closeLeaderboardModal)
   this.bindButtonPress(".relay-button", this.relayMode);
   this.bindButtonPress(".three-button", this.threeByThree);
   this.bindButtonPress(".victory-button", this.victoryScreen);
   this.bindButtonPress(".dark-button", this.darkMode);
+  this.bindButtonPress(".fa-trophy", this.openLeaderboardModal);
+  this.bindButtonPress(".close-add-to-leaderboard", this.closeAddToLeaderboardModal);
+  this.bindButtonPress(".launch-add-to-leaderboard", this.openAddToLeaderboardModal);
+  this.bindButtonPress(".add-to-leaderboard-button", this.addToLeaderboard);
+  
 
     // Respond to swipe events
     var touchStartClientX, touchStartClientY;
@@ -175,10 +181,35 @@ KeyboardInputManager.prototype.closeSettingsModal = function (event) {
     this.emit("closeSettings");
 };
 
+KeyboardInputManager.prototype.closeLeaderboardModal = function (event) {
+    event.preventDefault();
+    this.emit("closeLeaderboard");
+}
+
+KeyboardInputManager.prototype.closeAddToLeaderboardModal = function (event) {
+    event.preventDefault();
+    this.leaderboard.closeAddToLeaderboardModal();
+}
+
+KeyboardInputManager.prototype.openAddToLeaderboardModal = function (event) {
+    event.preventDefault();
+    this.leaderboard.openAddToLeaderboardModal();
+}
+
+KeyboardInputManager.prototype.addToLeaderboard = function (event) {
+    event.preventDefault();
+    this.emit("addToLeaderboard");
+}
+
 KeyboardInputManager.prototype.keepPlaying = function (event) {
     event.preventDefault();
     this.emit("keepPlaying");
 };
+
+KeyboardInputManager.prototype.openLeaderboardModal= function () {
+    event.preventDefault();
+    this.emit("leaderboard");
+}
 
 KeyboardInputManager.prototype.bindButtonPress = function (selector, fn) {
     var button = document.querySelector(selector);

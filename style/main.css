@@ -26,11 +26,31 @@ html, body {
     display: none !important;
 }
 
+.high-score-name {
+    position:absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.add-to-leaderboard-button {
+    position:absolute;
+    right: 10px;
+    display: inline !important;
+}
+
+.add-name-input {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    border-radius: 5px;
+}
+
 
 .heading:after {
-  content: "";
-  display: block;
-  clear: both; }
+    content: "";
+    display: block;
+    clear: both;
+}
 
 h1.title {
     font-size: 45px;
@@ -229,13 +249,20 @@ hr {
     cursor:pointer;
 }
 
+.fa-trophy {
+    position: absolute;
+    left: 15px;
+    top: 15px;
+    font-size: 40px !important;
+    cursor: pointer;
+}
+
 .settings-modal {
     display: none;
     height: 100%;
     width: 100%;
-    z-index: 2;
+    z-index: 102;
     background-color: rgba(0,0,0,0.4);
-    padding-top: 100px;
     position: fixed;
     top: 0;
 }
@@ -243,10 +270,13 @@ hr {
 .settings-modal-content {
     background-color: #faf8ef;
     border-radius: 3px;
-    margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 400px;
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
 }
 
 .fa-times {
