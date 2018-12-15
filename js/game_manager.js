@@ -405,7 +405,9 @@ GameManager.prototype.move = function (direction) {
           var merged = new Tile(positions.next, tile.value * 2);
           merged.mergedFrom = [tile, next];
           if (merged.value == 2048 && !self.won && self.showVictory) self.won = true;
-          document.getElementById("launch").style.display = self.won ? "none" : "inline-block";
+
+          
+          document.getElementById("launch").style.display = (self.won || self.size === 3) ? "none" : "inline-block";
           self.grid.insertTile(merged);
           self.grid.removeTile(tile);
 
