@@ -23,7 +23,7 @@ const Game = ({ p1Char, p2Char, setWinner, gameCount }) => {
                 <div className='title'>P1</div>
                 <img 
                     className={`image2 ${currentWinner === 'p1' ? 'winner' : ''}`}
-                    src={`${process.env.PUBLIC_URL}/assets/${p1Char.image}`}
+                    src={`${process.env.PUBLIC_URL}/assets/characters/${p1Char.image}`}
                     alt={p1Char.name || 'Player 1 character'}
                 />
             </div>
@@ -31,7 +31,7 @@ const Game = ({ p1Char, p2Char, setWinner, gameCount }) => {
                 <div className='title'>P2</div>
                 <img 
                     className={`image2 ${currentWinner === 'p2' ? 'winner' : ''}`}
-                    src={`${process.env.PUBLIC_URL}/assets/${p2Char.image}`}
+                    src={`${process.env.PUBLIC_URL}/assets/characters/${p2Char.image}`}
                     alt={p2Char.name || 'Player 2 character'}
                 />
             </div>

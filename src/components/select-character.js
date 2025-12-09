@@ -34,10 +34,10 @@ const SelectCharacter = ({ characters, setChars, nextState, name }) => {
             <div className="title">{ name } select {5 - characters.length} character{characters.length !== 4 && 's'}</div>
             { rows && rows.length &&
                 <div>
-                    { rows && rows.length && rows.map(row => <div className="row">
+                    { rows && rows.length && rows.map((row, index) => <div key={index} className="row">
                         {row.map(char => {
-                            return <div key={char.id} onClick={() => selectCharacter(char)}>
-                                <img className="image" src={`${process.env.PUBLIC_URL}/assets/${char.image}`} alt={char.name || 'Character'} />
+                            return <div key={char.id} onClick={() => selectCharacter(char)} style={{ cursor: 'pointer' }}>
+                                <img className="image" src={`${process.env.PUBLIC_URL}/assets/characters/${char.image}`} alt={char.name || 'Character'} />
                             </div>
                         })}
                     </div> )}
@@ -48,7 +48,7 @@ const SelectCharacter = ({ characters, setChars, nextState, name }) => {
                 <div className='row'>
                     {characters && characters.length ? characters.map(char => {
                         return <div key={char.id} onClick={() => removeCharacter(char)}>
-                            <img className='image' src={`${process.env.PUBLIC_URL}/assets/${char.image}`} alt={char.name || 'Character'} />
+                            <img className='image' src={`${process.env.PUBLIC_URL}/assets/characters/${char.image}`} alt={char.name || 'Character'} />
                         </div>
                     }) : null}
                 </div>

@@ -1,9 +1,10 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import SelectCharacters from './components/select-character';
 import Pregame from './components/pre-game';
 import Game from './components/game';
 import PostGame from './components/post-game';
+import AboutModal from './components/about-modal';
 
 function App() {
   const [gameState, setGameState] = useState('cs-p1');
@@ -45,10 +46,27 @@ function App() {
     setGameState('cs-p1')
   } 
 
-  
+
+  useEffect(() => {
+    if (winner === 'g1' || matchState.p1 + matchState.p2 === 4) {
+      console.log('yoo')
+        const p1Char = Math.floor(Math.random() * p1Chars.length);
+        setSelectedP1Char(p1Chars[p1Char]); 
+        const p2Char = Math.floor(Math.random() * p2Chars.length);
+        setSelectedP2Char(p2Chars[p2Char]);
+    } else if (winner === 'p1') {
+        const p1Char = Math.floor(Math.random() * p1Chars.length);
+        setSelectedP1Char(p1Chars[p1Char]);
+    } else if (winner === 'p2') {
+        const p2Char = Math.floor(Math.random() * p2Chars.length);
+        setSelectedP2Char(p2Chars[p2Char]);
+    }
+}, [p1Chars, p2Chars, winner, matchState])
 
   return (
     <div style={{ height: '100vh', width: '100vw', backgroundColor: '#222', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <AboutModal />
+
       { gameState === 'cs-p1' &&
         <SelectCharacters
           characters={p1Chars}

@@ -1,23 +1,7 @@
 import './default.css'
-import { useEffect, useCallback } from 'react'
 
 const Pregame = ({ p1Chars, setP1Char, selectedP1Char, p2Chars, setP2Char, selectedP2Char, prevWinner, nextState, matchState }) => {
-    const isGameFive = useCallback(() => matchState.p1 === 2 && matchState.p2 === 2, [matchState]);
-
-    useEffect(() => {
-        if (prevWinner === 'g1' || isGameFive()) {
-            const p1Char = Math.floor(Math.random() * p1Chars.length);
-            setP1Char(p1Chars[p1Char]); 
-            const p2Char = Math.floor(Math.random() * p2Chars.length);
-            setP2Char(p2Chars[p2Char]);
-        } else if (prevWinner === 'p1') {
-            const p1Char = Math.floor(Math.random() * p1Chars.length);
-            setP1Char(p1Chars[p1Char]);
-        } else if (prevWinner === 'p2') {
-            const p2Char = Math.floor(Math.random() * p2Chars.length);
-            setP2Char(p2Chars[p2Char]);
-        }
-    }, [p1Chars, p2Chars, prevWinner, isGameFive, setP1Char, setP2Char])
+    const isGameFive = () => matchState.p1 === 2 && matchState.p2 === 2
 
     return <div className='character-select'>
             { prevWinner === 'p2' && !isGameFive() && <>
@@ -27,7 +11,7 @@ const Pregame = ({ p1Chars, setP1Char, selectedP1Char, p2Chars, setP2Char, selec
                         <img
                             key={char.id}
                             className={`image3 ${selectedP1Char && selectedP1Char.id === char.id ? 'winner' : ''}`}
-                            src={`${process.env.PUBLIC_URL}/assets/${char.image}`}
+                            src={`${process.env.PUBLIC_URL}/assets/characters/${char.image}`}
                             onClick={() => setP1Char(char)}
                             alt={char.name || 'Character'}
                         />
@@ -38,13 +22,13 @@ const Pregame = ({ p1Chars, setP1Char, selectedP1Char, p2Chars, setP2Char, selec
                 { selectedP1Char && (prevWinner === 'p1' || prevWinner === 'g1' || isGameFive()) && 
                     <div className='player'>
                         <div className='title'>Player 1</div>
-                        <img className='image2' src={`${process.env.PUBLIC_URL}/assets/${selectedP1Char.image}`} alt={selectedP1Char.name || 'Player 1 character'} />
+                        <img className='image2' src={`${process.env.PUBLIC_URL}/assets/characters/${selectedP1Char.image}`} alt={selectedP1Char.name || 'Player 1 character'} />
                     </div>
                 }
                 { selectedP2Char && (prevWinner === 'p2' || prevWinner === 'g1' || isGameFive()) && 
                     <div className='player'>
                         <div className='title'>Player 2</div>
-                        <img className='image2' src={`${process.env.PUBLIC_URL}/assets/${selectedP2Char.image}`} alt={selectedP2Char.name || 'Player 2 character'}/>
+                        <img className='image2' src={`${process.env.PUBLIC_URL}/assets/characters/${selectedP2Char.image}`} alt={selectedP2Char.name || 'Player 2 character'}/>
                     </div>
                 }
 
@@ -55,7 +39,7 @@ const Pregame = ({ p1Chars, setP1Char, selectedP1Char, p2Chars, setP2Char, selec
                         <img
                             key={char.id}
                             className={`image3 ${selectedP2Char && selectedP2Char.id === char.id ? 'winner' : ''}`}
-                            src={`${process.env.PUBLIC_URL}/assets/${char.image}`}
+                            src={`${process.env.PUBLIC_URL}/assets/characters/${char.image}`}
                             onClick={() => setP2Char(char)}
                             alt={char.name || 'Character'}
                         />

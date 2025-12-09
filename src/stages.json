@@ -1,0 +1,10 @@
+{
+  "starters": [
+    { "name": "Brinstar", "image": "brinstar.png" },
+    { "name": "Corneria", "image": "corneria.png" },
+    { "name": "Kongo Jungle", "image": "kongo_jungle.png" },
+    { "name": "Mute City", "image": "mute_city.png" },
+    { "name": "Rainbow Cruise", "image": "rainbow_cruise.png" }
+  ],
+  "counterpick": { "name": "Poke Floats", "image": "poke_floats.png" }
+}
