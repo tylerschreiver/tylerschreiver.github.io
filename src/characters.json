@@ -1,0 +1,123 @@
+{
+    "character_rows": [
+        {
+            "name":  "Row 1",
+            "characters": [
+                {
+                    "id": "doc",
+                    "image": "doc.png"
+                },
+                {
+                    "id": "mario",
+                    "image": "mario.png"
+                },
+                {
+                    "id": "luigi",
+                    "image": "luigi.png"
+                },
+                {
+                    "id": "bowser",
+                    "image": "bowser.png"
+                },
+                {
+                    "id": "peach",
+                    "image": "peach.png"
+                },
+                {
+                    "id": "yoshi",
+                    "image": "yoshi.png"
+                },
+                {
+                    "id": "dk",
+                    "image": "dk.png"
+                },
+                {
+                    "id": "falcon",
+                    "image": "falcon.png"
+                },
+                {
+                    "id": "ganon",
+                    "image": "ganon.png"
+                }
+            ]
+        },
+        {
+            "name": "Row 2",
+            "characters": [
+                {
+                    "id": "falco",
+                    "image": "falco.png"
+                },
+                {
+                    "id": "fox",
+                    "image": "fox.png"
+                },
+                {
+                    "id": "ness",
+                    "image": "ness.png"
+                },
+                {
+                    "id": "ics",
+                    "image": "ics.png"
+                },
+                {
+                    "id": "kirby",
+                    "image": "kirby.png"
+                },
+                {
+                    "id": "samus",
+                    "image": "samus.png"
+                },
+                {
+                    "id": "sheik",
+                    "image": "sheik.png"
+                },
+                {
+                    "id": "zelda",
+                    "image": "zelda.png"
+                },
+                {
+                    "id": "link",
+                    "image": "link.png"
+                },
+                {
+                    "id": "ylink",
+                    "image": "ylink.png"
+                }
+            ]
+        },
+        {
+            "name": "Row 3",
+            "characters": [
+                {
+                    "id": "pichu",
+                    "image": "pichu.png"
+                },
+                {
+                    "id": "pikachu",
+                    "image": "pikachu.png"
+                },
+                {
+                    "id": "puff",
+                    "image": "puff.png"
+                },
+                {
+                    "id": "mewtwo",
+                    "image": "mewtwo.png"
+                },
+                {
+                    "id": "gnw",
+                    "image": "gnw.png"
+                },
+                {
+                    "id": "marth",
+                    "image": "marth.png"
+                },
+                {
+                    "id": "roy",
+                    "image": "roy.png"
+                }
+            ]
+        }
+    ]
+}
