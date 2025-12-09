@@ -1,6 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import SelectCharacters from './components/select-character';
 import Pregame from './components/pre-game';
 import Game from './components/game';
