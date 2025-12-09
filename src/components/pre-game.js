@@ -1,8 +1,8 @@
 import './default.css'
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 
 const Pregame = ({ p1Chars, setP1Char, selectedP1Char, p2Chars, setP2Char, selectedP2Char, prevWinner, nextState, matchState }) => {
-    const isGameFive = () => matchState.p1 === 2 && matchState.p2 === 2;
+    const isGameFive = useCallback(() => matchState.p1 === 2 && matchState.p2 === 2, [matchState]);
 
     useEffect(() => {
         if (prevWinner === 'g1' || isGameFive()) {
